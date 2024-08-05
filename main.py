@@ -16,8 +16,8 @@ def send_notifications(content: list[dict], percentage: float):
     client = Client(ACCOUNT_SID, TWILIO_AUTH_TOKEN)
     body = Notification(content, percentage)
     message = client.messages.create(
-        from_='+16672919103',
-        to='+13434628385',
+        from_=os.getenv('TWILIO_NUMBER'),
+        to=os.getenv('MY_NUMBER'),
         body=body.get_text()
     )
     print(message.status)
@@ -44,7 +44,7 @@ percentage_difference = abs((float(yesterday_stock_data["4. close"]) -
 
 # -------------------------------------------- Get Related News ------------------------------------------------------#
 
-NEWS_API_KEY = "12d1ae578f44425fae3ef42d5d2cfdb1"
+NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 
 news = requests.get(
     f"https://newsapi.org/v2/everything?q=apple+stock+market&from={yesterday}\
